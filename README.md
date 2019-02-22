@@ -9,7 +9,7 @@ Hint: Base64, Hexdump
 
 **Jawaban**
 
-1. Membuat file script di /home/rak dengan nama soal1.sh untuk enkripsi file backup syslog yang berisikan ini:
+1. Membuat file script di /home/rak dengan nama soal1.sh untuk decode file backup syslog yang berisikan ini:
     ```
     #crontab-step
     unzip ~/modul1/nature.zip -d ~/modul1

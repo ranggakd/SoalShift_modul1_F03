@@ -1,0 +1,7 @@
+#no5
+2-30/6 * * * * /bin/bash ~/soal5.sh
+#no4
+0 */1 * * * /bin/bash ~/soal4.sh
+#no1
+14 14 14 2 * /bin/bash ~/soal1.sh
+0 */1 * 2 5 /bin/bash ~/soal1.sh
