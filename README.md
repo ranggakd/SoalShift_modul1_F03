@@ -24,6 +24,50 @@ Hint: Base64, Hexdump
     done
     chmod 777 ~/modul1/nature_dec/*.jpg
     ```
+    Penjelasan:
+    ```
+    unzip ~/modul1/nature.zip -d ~/modul1
+    mkdir ~/modul1/nature_dec
+    ```
+    untuk langkah ini zip folder nature didalam folder modul1 ke destinasi folder modul1  
+    kemudian membuat direktori untuk kebutuhan dekripsi didalam folder modul1
+    ```
+    hasil=1
+    for pic in ~/modul1/nature/*.jpg
+    do
+            base64 -d $pic | xxd -r > ~/modul1/nature_dec/$hasil.jpg
+            hasil=$(($hasil+1))
+    done
+    ```
+    variabel hasil berisi angka guna memberi nama file berupa nomor sesuai jumlah iterasi di for loop
+    for loop dengan variabel iterasi pic menunjuk tiap file jpg didalam list file-file jpg didalam folder nature. Di setiap for loop, melakukan decode basis64 untuk tiap file yang outputnya dijadikan input untuk direvert menjadi binary. Hasil binary akan diredirect menjadi output kedalam folder nature_dec untuk disimpan menjadi file. Variabel hasil akan increment setiap loop dijalankan
+    ```
+    chmod 777 ~/modul1/nature_dec/*.jpg
+    ```
+    agar dapat dieksekusi, maka buka batasan eksekusi setiap file jpg didalam nature_dec
+
+2. Untuk syarat mendekripsi isi folder pukul 14:14 pada tanggal 14 Februari atau hari jumat pada bulan Februari, dapat dilakukan dengan penjadwalan pada cron. Edit crontab dengan command `crontab -e`. Tambahkan di akhir file dengan syntax crontab  
+    ```
+    14 14 14 2 * /bin/bash ~/soal1.sh
+    0 */1 * 2 5 /bin/bash ~/soal1.sh
+    ```
+    Penjelasan:
+    ```
+    14 14 14 2 * 
+    ```
+    pada jam 14 dan menit ke-14 pada tanggal 14 di bulan Februari
+    ```
+    /bin/bash ~/soal1.sh
+    ```
+    dengan format bash mengeksekusi file di path
+    ```
+    0 */1 * 2 5 
+    ```
+    setiap jam menit ke-0 pada hari Jumat setiap Februari
+    ```
+    /bin/bash ~/soal1.sh
+    ```
+    dengan format bash mengeksekusi file di path
 
 ---
 ## NO 4
