@@ -80,10 +80,50 @@ Anda merupakan pegawai magang pada sebuah perusahaan retail, dan anda diminta un
 **Jawaban**
 
 1.
+    ```
+    echo -e "\n2a)"
 
-2.
+    #2(a)
+    awk -F "," '{if($7 == '2012') arr[$1]+=$10} END {for(res in arr) {print res}}' ~/modul1/WA_Sales_Products_2012-14.csv | sort -nr | head -1
 
-3.
+    echo -e "\n2b)"
+    #2(b)
+    awk -F  "," '{if($1 == "United States" && $7 == '2012') arr[$4]+=$10} END {for(res in arr) print arr[res], res}' ~/modul1/WA_Sales_Products_2012-14.csv | sort -rn | awk '(NR<=3) {print $2,$3}'
+
+    echo -e "\n2c)"
+    #2(c)
+    echo -e "Personal Accessories:"
+    awk -F "," '{if($1 == "United States" && $7 == '2012' && $4 == "Personal Accessories") arr[$6]+=$10} END {for(res in arr) print arr[res], res}' ~/modul1/WA_Sales_Products_2012-14.csv | sort -rn | awk '(NR <=3) {print $2, $3, $4}'
+    echo -e "\nCamping Equipment:"
+    awk -F "," '{if($1 == "United States" && $7 == '2012' && $4 == "Camping Equipment") arr[$6]+=$10} END {for(res in arr) print arr[res], res}' ~/modul1/WA_Sales_Products_2012-14.csv | sort -rn | awk '(NR <=3) {print $2, $3, $4}'
+    echo -e "\nOutdoor Protection:"
+    awk -F "," '{if($1 == "United States" && $7 == '2012' && $4 == "Outdoor Protection") arr[$6]+=$10} END {for(res in arr) print iter[res], res}' ~/modul1/WA_Sales_Products_2012-14.csv | sort -rn | awk '(NR <=3) {print $2, $3, $4}'
+    ```
+    Penjelasan:
+    ```
+    awk -F "," '{if($7 == '2012') arr[$1]+=$10} END {for(res in arr) {print res}}' ~/modul1/WA_Sales_Products_2012-14.csv | sort -nr | head -1
+    ```
+    -F untuk separator untuk memisahkan "," diantara kolom. Jika kolom ke tujuh bernilai 2012, lalu array dengan key arg ke-1 diisi sum arg ke-10. Pada eof, lakukan for loop dalam array kemudian print. Lalu sorting secara numerik dan dibalik dan diambil hanya teratas
+    ```
+    awk -F  "," '{if($1 == "United States" && $7 == '2012') arr[$4]+=$10} END {for(res in arr) print arr[res], res}' ~/modul1/WA_Sales_Products_2012-14.csv | sort -rn | awk '(NR<=3) {print $2,$3}'
+    ```
+    -F untuk separator untuk memisahkan "," diantara kolom. Jika kolom ke pertama bernilai "United State" dan kolom ke tujuh bernilai 2012, lalu array dengan key arg ke-4 diisi sum arg ke-10. Pada eof, lakukan for loop dalam array kemudian print isi array ke-"res" dan res. Lalu sorting secara numerik dan dibalik. Kemudian batasi hanya 3 baris saja yang keluar dan print arg ke-2 dan ke-3
+    ```
+    echo -e "Personal Accessories:"
+    awk -F "," '{if($1 == "United States" && $7 == '2012' && $4 == "Personal Accessories") arr[$6]+=$10} END {for(res in arr) print arr[res], res}' ~/modul1/WA_Sales_Products_2012-14.csv | sort -rn | awk '(NR <=3) {print $2, $3, $4}'
+    echo -e "\nCamping Equipment:"
+    awk -F "," '{if($1 == "United States" && $7 == '2012' && $4 == "Camping Equipment") arr[$6]+=$10} END {for(res in arr) print arr[res], res}' ~/modul1/WA_Sales_Products_2012-14.csv | sort -rn | awk '(NR <=3) {print $2, $3, $4}'
+    echo -e "\nOutdoor Protection:"
+    awk -F "," '{if($1 == "United States" && $7 == '2012' && $4 == "Outdoor Protection") arr[$6]+=$10} END {for(res in arr) print iter[res], res}' ~/modul1/WA_Sales_Products_2012-14.csv | sort -rn | awk '(NR <=3) {print $2, $3, $4}'
+    ```
+    untuk Personal Accesories:  
+    -F untuk separator untuk memisahkan "," diantara kolom. Jika kolom ke pertama bernilai "United State" dan kolom ke tujuh bernilai 2012 dan kolom ke empat bernilai Personal Accesories, lalu array dengan key arg ke-6 diisi sum arg ke-10. Pada eof, lakukan for loop dalam array kemudian print isi array ke-"res" dan res. Lalu sorting secara numerik dan dibalik. Kemudian batasi hanya 3 baris saja yang keluar dan print arg ke-2 dan ke-3 dan ke-4  
+    untuk Camping Equipment:  
+    -F untuk separator untuk memisahkan "," diantara kolom. Jika kolom ke pertama bernilai "United State" dan kolom ke tujuh bernilai 2012 dan kolom ke empat bernilai Camping Equipment, lalu array dengan key arg ke-6 diisi sum arg ke-10. Pada eof, lakukan for loop dalam array kemudian print isi array ke-"res" dan res. Lalu sorting secara numerik dan dibalik. Kemudian batasi hanya 3 baris saja yang keluar dan print arg ke-2 dan ke-3 dan ke-4  
+    untuk Outdoor Protection:  
+    -F untuk separator untuk memisahkan "," diantara kolom. Jika kolom ke pertama bernilai "United State" dan kolom ke tujuh bernilai 2012 dan kolom ke empat bernilai Outdoor Protection, lalu array dengan key arg ke-6 diisi sum arg ke-10. Pada eof, lakukan for loop dalam array kemudian print isi array ke-"res" dan res. Lalu sorting secara numerik dan dibalik. Kemudian batasi hanya 3 baris saja yang keluar dan print arg ke-2 dan ke-3 dan ke-4  
+
+2. Lakukan command `bash soalno2.sh`
 
 ---
 ## NO 3
@@ -169,6 +209,8 @@ Buatlah sebuah script bash yang dapat menghasilkan password secara acak sebanyak
     ```
     for loop untuk meng-generate password. Jika suatu file password tidak ada, maka buat password baru dari /dev/urandom/ dengan regex [A-Za-z0-9] dan max character 12  
     kemudian lakukan for loop untuk mengecek apakah password yang digenerate barusan bernilai sama dengan password yang pernah ada dengan komparasi pada array proof. Jika tidak, maka langsung redirect menjadi file password baru
+
+2. Lakukan command `bash soal3.sh` dan cek di folder dengan `ls /modul1/pass/`
 
 ---
 ## NO 4
