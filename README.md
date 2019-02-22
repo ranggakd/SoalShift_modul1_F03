@@ -70,6 +70,107 @@ Hint: Base64, Hexdump
     dengan format bash mengeksekusi file di path
 
 ---
+## NO 2
+
+Anda merupakan pegawai magang pada sebuah perusahaan retail, dan anda diminta untuk memberikan laporan berdasarkan file WA_Sales_Products_2012-14.csv. Laporan yang diminta berupa:  
+1. Tentukan negara dengan penjualan(quantity) terbanyak pada tahun 2012.  
+2. Tentukan tiga product line yang memberikan penjualan(quantity) terbanyak pada soal poin 1.  
+3. Tentukan tiga product yang memberikan penjualan(quantity) terbanyak berdasarkan tiga product line yang didapatkan pada soal poin 3.
+
+**Jawaban**
+
+1.
+
+2.
+
+3.
+
+---
+## NO 3
+
+Buatlah sebuah script bash yang dapat menghasilkan password secara acak sebanyak 12 karakter yang terdapat huruf besar, huruf kecil, dan angka. Password acak tersebut disimpan pada file berekstensi .txt dengan ketentuan pemberian nama sebagai berikut:  
+1. Jika tidak ditemukan file password1.txt maka password acak tersebut disimpan pada file bernama password1.txt  
+2. Jika file password1.txt sudah ada maka password acak baru akan disimpan pada file bernama password2.txt dan begitu seterusnya.  
+3. Urutan nama file tidak boleh ada yang terlewatkan meski filenya dihapus.
+4. Password yang dihasilkan tidak boleh sama.
+
+**Jawaban**
+
+1. Membuat file script di /home/rak dengan nama soal3.sh untuk enkripsi file backup syslog yang berisikan ini:  
+
+    ```
+    #untuk bukti unik
+    x=1
+    folder="/home/rak/modul1/pass/"
+
+    if [ "$(ls -A $folder)" ]
+    then
+            for files in ~/modul1/pass/password*.txt
+            do
+                    proof[x]=`cat $files`
+                    x=$(($x+1))
+            done
+    fi
+
+    #generate password
+    for ((i=1; i<=x; i++))
+    do
+            if [ ! -f ~/modul1/pass/password$i.txt ]
+            then
+                    pass=`head /dev/urandom | tr -dc A-Za-z0-9 | head -c 12`
+                    for j in proof
+                    do
+                            if [ "$pass" == "${proof[j]}" ]
+                            then
+                                    pass=`head /dev/urandom | tr -dc A-Za-z0-9 | head $                        break
+                            fi
+                    done
+                    echo $pass > ~/modul1/pass/password$i.txt
+                    break
+            fi
+    done
+    ```
+    Penjelasan:
+    ```
+    x=1
+    folder="/home/rak/modul1/pass/"
+    ```
+    variabel x untuk iterasi array proof bukti unik password dan sebagai batas iterasi  
+    variabel folder untuk menyimpan kondisi apakah folder itu kosong atau tidak
+    ```
+    if [ "$(ls -A $folder)" ]
+    then
+            for files in ~/modul1/pass/password*.txt
+            do
+                    proof[x]=`cat $files`
+                    x=$(($x+1))
+            done
+    fi
+    ```
+    jika folder berisi suatu file, maka lakukan for loop untuk menyimpan list password dari semua file yang ada di folder  
+    variabel x increment setiap for loop
+    ```
+    for ((i=1; i<=x; i++))
+    do
+            if [ ! -f ~/modul1/pass/password$i.txt ]
+            then
+                    pass=`head /dev/urandom | tr -dc A-Za-z0-9 | head -c 12`
+                    for j in proof
+                    do
+                            if [ "$pass" == "${proof[j]}" ]
+                            then
+                                    pass=`head /dev/urandom | tr -dc A-Za-z0-9 | head $                        break
+                            fi
+                    done
+                    echo $pass > ~/modul1/pass/password$i.txt
+                    break
+            fi
+    done
+    ```
+    for loop untuk meng-generate password. Jika suatu file password tidak ada, maka buat password baru dari /dev/urandom/ dengan regex [A-Za-z0-9] dan max character 12  
+    kemudian lakukan for loop untuk mengecek apakah password yang digenerate barusan bernilai sama dengan password yang pernah ada dengan komparasi pada array proof. Jika tidak, maka langsung redirect menjadi file password baru
+
+---
 ## NO 4
 
 Lakukan backup file syslog setiap jam dengan format nama file
