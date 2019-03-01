@@ -3,6 +3,10 @@
 #Masukkan nama file yang dimaksud:
 wkt=$1
 jam=${wkt:0:2}
+if [[ ${jam:0:1} =~ [0-9] ]] && [ ${jam:1:1} == ":" ]
+then
+        jam=${jam:0:1}
+fi
 
 up="ABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZ"
 lo="abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz"

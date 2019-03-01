@@ -1,7 +1,15 @@
 #no4 enkripsi
 
 jam=`date +"%H"`
+if [ ${jam:0:1} == 0 ]
+then
+        jam=${jam:1:1}
+fi
 nama=`date +"%H:%M %d-%m-%y"`
+if [ ${nama:0:1} == 0 ]
+then
+        nama=${nama:1}
+fi
 
 up="ABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZ"
 lo="abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz"

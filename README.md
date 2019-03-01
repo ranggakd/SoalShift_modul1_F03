@@ -10,7 +10,7 @@ Hint: Base64, Hexdump
 **Jawaban**
 
 1. Membuat file script di /home/rak dengan nama soal1.sh untuk decode file backup syslog yang berisikan ini:
-    ```
+    ```bash
     #crontab-step
     unzip ~/modul1/nature.zip -d ~/modul1
     mkdir ~/modul1/nature_dec
@@ -25,13 +25,13 @@ Hint: Base64, Hexdump
     chmod 777 ~/modul1/nature_dec/*.jpg
     ```
     Penjelasan:
-    ```
+    ```bash
     unzip ~/modul1/nature.zip -d ~/modul1
     mkdir ~/modul1/nature_dec
     ```
     untuk langkah ini zip folder nature didalam folder modul1 ke destinasi folder modul1  
     kemudian membuat direktori untuk kebutuhan dekripsi didalam folder modul1
-    ```
+    ```bash
     hasil=1
     for pic in ~/modul1/nature/*.jpg
     do
@@ -41,30 +41,30 @@ Hint: Base64, Hexdump
     ```
     variabel hasil berisi angka guna memberi nama file berupa nomor sesuai jumlah iterasi di for loop
     for loop dengan variabel iterasi pic menunjuk tiap file jpg didalam list file-file jpg didalam folder nature. Di setiap for loop, melakukan decode basis64 untuk tiap file yang outputnya dijadikan input untuk direvert menjadi binary. Hasil binary akan diredirect menjadi output kedalam folder nature_dec untuk disimpan menjadi file. Variabel hasil akan increment setiap loop dijalankan
-    ```
+    ```bash
     chmod 777 ~/modul1/nature_dec/*.jpg
     ```
     agar dapat dieksekusi, maka buka batasan eksekusi setiap file jpg didalam nature_dec
 
 2. Untuk syarat mendekripsi isi folder pukul 14:14 pada tanggal 14 Februari atau hari jumat pada bulan Februari, dapat dilakukan dengan penjadwalan pada cron. Edit crontab dengan command `crontab -e`. Tambahkan di akhir file dengan syntax crontab  
-    ```
+    ```awk
     14 14 14 2 * /bin/bash ~/soal1.sh
     0 */1 * 2 5 /bin/bash ~/soal1.sh
     ```
     Penjelasan:
-    ```
+    ```awk
     14 14 14 2 * 
     ```
     pada jam 14 dan menit ke-14 pada tanggal 14 di bulan Februari
-    ```
+    ```awk
     /bin/bash ~/soal1.sh
     ```
     dengan format bash mengeksekusi file di path
-    ```
+    ```awk
     0 */1 * 2 5 
     ```
     setiap jam menit ke-0 pada hari Jumat setiap Februari
-    ```
+    ```awk
     /bin/bash ~/soal1.sh
     ```
     dengan format bash mengeksekusi file di path
@@ -80,7 +80,7 @@ Anda merupakan pegawai magang pada sebuah perusahaan retail, dan anda diminta un
 **Jawaban**
 
 1.
-    ```
+    ```bash
     echo -e "\n2a)"
 
     #2(a)
@@ -100,15 +100,15 @@ Anda merupakan pegawai magang pada sebuah perusahaan retail, dan anda diminta un
     awk -F "," '{if($1 == "United States" && $7 == '2012' && $4 == "Outdoor Protection") arr[$6]+=$10} END {for(res in arr) print iter[res], res}' ~/modul1/WA_Sales_Products_2012-14.csv | sort -rn | awk '(NR <=3) {print $2, $3, $4}'
     ```
     Penjelasan:
-    ```
+    ```awk
     awk -F "," '{if($7 == '2012') arr[$1]+=$10} END {for(res in arr) {print res}}' ~/modul1/WA_Sales_Products_2012-14.csv | sort -nr | head -1
     ```
     -F untuk separator untuk memisahkan "," diantara kolom. Jika kolom ke tujuh bernilai 2012, lalu array dengan key arg ke-1 diisi sum arg ke-10. Pada eof, lakukan for loop dalam array kemudian print. Lalu sorting secara numerik dan dibalik dan diambil hanya teratas
-    ```
+    ```awk
     awk -F  "," '{if($1 == "United States" && $7 == '2012') arr[$4]+=$10} END {for(res in arr) print arr[res], res}' ~/modul1/WA_Sales_Products_2012-14.csv | sort -rn | awk '(NR<=3) {print $2,$3}'
     ```
     -F untuk separator untuk memisahkan "," diantara kolom. Jika kolom ke pertama bernilai "United State" dan kolom ke tujuh bernilai 2012, lalu array dengan key arg ke-4 diisi sum arg ke-10. Pada eof, lakukan for loop dalam array kemudian print isi array ke-"res" dan res. Lalu sorting secara numerik dan dibalik. Kemudian batasi hanya 3 baris saja yang keluar dan print arg ke-2 dan ke-3
-    ```
+    ```awk
     echo -e "Personal Accessories:"
     awk -F "," '{if($1 == "United States" && $7 == '2012' && $4 == "Personal Accessories") arr[$6]+=$10} END {for(res in arr) print arr[res], res}' ~/modul1/WA_Sales_Products_2012-14.csv | sort -rn | awk '(NR <=3) {print $2, $3, $4}'
     echo -e "\nCamping Equipment:"
@@ -138,7 +138,7 @@ Buatlah sebuah script bash yang dapat menghasilkan password secara acak sebanyak
 
 1. Membuat file script di /home/rak dengan nama soal3.sh untuk enkripsi file backup syslog yang berisikan ini:  
 
-    ```
+    ```bash
     #untuk bukti unik
     x=1
     folder="/home/rak/modul1/pass/"
@@ -171,13 +171,13 @@ Buatlah sebuah script bash yang dapat menghasilkan password secara acak sebanyak
     done
     ```
     Penjelasan:
-    ```
+    ```bash
     x=1
     folder="/home/rak/modul1/pass/"
     ```
     variabel x untuk iterasi array proof bukti unik password dan sebagai batas iterasi  
     variabel folder untuk menyimpan kondisi apakah folder itu kosong atau tidak
-    ```
+    ```bash
     if [ "$(ls -A $folder)" ]
     then
             for files in ~/modul1/pass/password*.txt
@@ -189,7 +189,7 @@ Buatlah sebuah script bash yang dapat menghasilkan password secara acak sebanyak
     ```
     jika folder berisi suatu file, maka lakukan for loop untuk menyimpan list password dari semua file yang ada di folder  
     variabel x increment setiap for loop
-    ```
+    ```bash
     for ((i=1; i<=x; i++))
     do
             if [ ! -f ~/modul1/pass/password$i.txt ]
@@ -226,36 +226,54 @@ Lakukan backup file syslog setiap jam dengan format nama file
 **Jawaban**
 
 1. Membuat file script di /home/rak dengan nama soal4.sh untuk enkripsi file backup syslog yang berisikan ini:  
-    ```
+    ```bash
     jam=`date +"%H"`
+    if [ ${jam:0:1} == 0 ]
+    then
+            jam=${jam:1:1}
+    fi
     nama=`date +"%H:%M %d-%m-%y"`
+    if [ ${nama:0:1} == 0 ]
+    then
+            nama=${nama:1}
+    fi
 
     up="ABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZ"
     lo="abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz"
     awk '{print}' /var/log/syslog | tr "${up:0:26}${lo:0:26}" "${up:$jam:26}${lo:$jam:26}" > "/home/rak/modul1/$nama"
     ```
     Penjelasan:
-    ```  
+    ```bash  
     jam=`date +"%H"`
+    if [ ${jam:0:1} == 0 ]
+    then
+            jam=${jam:1:1}
+    fi
     nama=`date +"%H:%M %d-%m-%y"`
+    if [ ${nama:0:1} == 0 ]
+    then
+            nama=${nama:1}
+    fi
     ```
     variabel jam mengambil nilai jam dari command date  
-    variabel nama mengambil nilai waktu-tanggal dari command date untuk format penamaan file
-    ```
+    melakukan error handling jika digit pertama 0  
+    variabel nama mengambil nilai waktu-tanggal dari command date untuk format penamaan file  
+    melakukan error handling jika digit pertama 0
+    ```bash
     up="ABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZ"
     lo="abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz"
     ```
     variabel up berisi string alphabet double untuk string manipulation uppercase  
     variabel lo berisi string alphabet double untuk string manipulation lowercase
-    ```
+    ```awk
     awk '{print}' /var/log/syslog
     ```
     command awk sebagai text processor menampilkan file dari input path
-    ```
+    ```bash
     | tr "${up:0:26}${lo:0:26}" "${up:$jam:26}${lo:$jam:26}"
     ```
     output dari command sebelumnya menjadi input untuk command tr mengganti serangkaian alphabet urutan normal menjadi serangkaian alphabet urutan modifikasi dari jumlah jam, baik dalam uppercase ataupun lowercase
-    ```
+    ```bash
      > "/home/rak/modul1/$nama"
     ```
     redirection ke file yang menjadi output
@@ -267,15 +285,15 @@ Lakukan backup file syslog setiap jam dengan format nama file
 4. Pastikan service cron sedang berjalan dengan command `service cron status` . Jika mengembalikan selain `* cron is running`, maka aktifkan dengan command `sudo service cron start`
 
 5. Edit crontab dengan command `crontab -e`. Tambahkan di akhir file dengan syntax crontab  
-    ```
+    ```awk
     0 */1 * * * /bin/bash ~/soal4.sh
     ```
     Penjelasan:  
-    ```
+    ```awk
     0 */1 * * *
     ```
     setiap satu jam menit ke-0
-    ```
+    ```awk
     /bin/bash ~/soal4.sh
     ```
     dengan format bash mengeksekusi file di path
@@ -283,42 +301,50 @@ Lakukan backup file syslog setiap jam dengan format nama file
 6. Tunggu hingga waktu sesuai dengan crontab. Cek hasil file dengan command `cat /home/rak/modul1/{jam:menit tgl-bulan-tahun}`
 
 7. Membuat file script di /home/rak dengan nama soal4desc.sh untuk dekripsi file backup syslog yang berisikan ini:  
-    ```
+    ```bash
     wkt=$1
     jam=${wkt:0:2}
-
+    if [[ ${jam:0:1} =~ [0-9] ]] && [ ${jam:1:1} == ":" ]
+    then
+            jam=${jam:0:1}
+    fi
     up="ABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZ"
     lo="abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz"
     awk '{print}' "/home/rak/modul1/$wkt" | tr "${up:$jam:26}${lo:$jam:26}" "${up:0:26}${lo:0:26}" > "/home/rak/modul1/dekripsi/$wkt"
     ```
     Penjelasan:
-    ```
+    ```bash
     wkt=$1
     jam=${wkt:0:2}
+    if [[ ${jam:0:1} =~ [0-9] ]] && [ ${jam:1:1} == ":" ]
+    then
+            jam=${jam:0:1}
+    fi
     ```
     variabel wkt berisi argumen ke-1 nama file yang diinputkan  
-    variabel jam berisi nilai kedua dari variabel string wkt yang menyatakan nilai jam
-    ```
+    variabel jam berisi nilai kedua dari variabel string wkt yang menyatakan nilai jam  
+    jika hanya digit pertama yang merepresentasikan jam, maka antisipasi ":" pada variabel jam
+    ```bash
     up="ABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZ"
     lo="abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz"
     ```
     variabel up berisi string alphabet double untuk string manipulation uppercase  
     variabel lo berisi string alphabet double untuk string manipulation lowercase
-    ```
+    ```awk
     awk '{print}' "/home/rak/modul1/$wkt"
     ```
     command awk sebagai text processor menampilkan file dari input path berdasarkan variabel waktu
-    ```
+    ```bash
     | tr "${up:$jam:26}${lo:$jam:26}" "${up:0:26}${lo:0:26}"
     ```
     output dari command sebelumnya menjadi input untuk command tr mengganti serangkaian alphabet urutan modifikasi dari jumlah jam menjadi serangkaian alphabet urutan normal, baik dalam uppercase ataupun lowercase
-    ```
+    ```bash
     > "/home/rak/modul1/dekripsi/$wkt"
     ```
     redirection ke file yang menjadi output berdasarkan variable wkt
 
 8. Lakukan dekripsi dengan command dan argumentasi nama file untuk dekripsi
-    ```
+    ```bash
     bash soal4desc.sh "{jam:menit tgl-bulan-tahun}"
     ```
 
@@ -334,27 +360,27 @@ Buatlah sebuah script bash untuk menyimpan record dalam syslog yang memenuhi kri
 **Jawaban**
 
 1. Membuat file script di /home/rak dengan nama soal5.sh berisikan ini:  
-    ```
+    ```awk
     awk '(/cron/ || /CRON/) && (!/sudo/) && (NF < 13)' /var/log/syslog  >> /home/rak/modul1/soalno5.log  
     ```
     Penjelasan:  
-    ```
+    ```awk
     awk '...'  
     ```
     command awk sebagai text processor  
-    ```
+    ```awk
     (/cron/ || /CRON/) && (!/sudo/)
     ```
     mengembalikan benar jika pola 'cron' atau 'CRON' dan selain 'sudo'  
-    ```
+    ```awk
     && (NF < 13)
     ```
     dan mengembalikan benar jika number of field kurang dari 13  
-    ```
+    ```awk
     /var/log/syslog
     ```
     path file yang menjadi input  
-    ```
+    ```awk
     >> /home/rak/modul1/soalno5.log
     ```
     redirection dengan append data di akhir file yang menjadi output
@@ -366,15 +392,15 @@ Buatlah sebuah script bash untuk menyimpan record dalam syslog yang memenuhi kri
 4. Pastikan service cron sedang berjalan dengan command `service cron status` . Jika mengembalikan selain `* cron is running`, maka aktifkan dengan command `sudo service cron start`
 
 5. Edit crontab dengan command `crontab -e`. Tambahkan di akhir file dengan syntax crontab  
-    ```
+    ```awk
     2-30/6 * * * * /bin/bash ~/soal5.sh
     ```
     Penjelasan:  
-    ```
+    ```awk
     2-30/6 * * * *
     ```
     setiap 6 menit dari menit ke-2 hingga menit ke-30
-    ```
+    ```awk
     /bin/bash ~/soal5.sh
     ```
     dengan format bash mengeksekusi file di path
